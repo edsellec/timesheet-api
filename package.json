@@ -1,0 +1,25 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "Edselle Cadenas",
+	"license": "MIT",
+	"scripts": {
+		"serve": "node index.js",
+		"start": "nodemon index.js",
+		"migrate": "knex migrate:latest",
+		"unmigrate": "knex migrate:rollback",
+		"seed": "knex seed:run "
+	},
+	"dependencies": {
+		"bcrypt": "^5.0.1",
+		"cors": "^2.8.5",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"knex": "^0.95.11",
+		"nodemon": "^2.0.13",
+		"objection": "^2.2.16",
+		"pg": "^8.7.1",
+		"postgres": "^1.0.2"
+	}
+}
