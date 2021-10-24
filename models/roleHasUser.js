@@ -1,27 +1,28 @@
 const { Model } = require("objection");
-const knex = require("../database.js");
+const knex = require("./../database.js");
 
 Model.knex(knex);
 
-class GroupHasUser extends Model {
+class RoleHasUser extends Model {
 	static get tableName() {
-		return "group_has_user";
+		return "role_has_user";
 	}
 
 	static get idColumn() {
-		return ["user_id", "group_id"];
+		return ["user_id", "role_id", "group_id"];
 	}
 
 	static get relationMappings() {
 		const User = require("./user");
 		const Group = require("./group");
+		const Role = require("./role");
 
 		return {
 			user: {
 				relation: Model.BelongsToOneRelation,
 				modelClass: User,
 				join: {
-					from: "group_has_user.user_id",
+					from: "role_has_user.user_id",
 					to: "user.id",
 				},
 			},
@@ -30,12 +31,21 @@ class GroupHasUser extends Model {
 				relation: Model.BelongsToOneRelation,
 				modelClass: Group,
 				join: {
-					from: "group_has_user.group_id",
+					from: "role_has_user.group_id",
 					to: "group.id",
+				},
+			},
+
+			role: {
+				relation: Model.BelongsToOneRelation,
+				modelClass: Role,
+				join: {
+					from: "role_has_user.role_id",
+					to: "role.id",
 				},
 			},
 		};
 	}
 }
 
-module.exports = GroupHasUser;
+module.exports = RoleHasUser;

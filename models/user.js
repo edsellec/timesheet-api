@@ -9,8 +9,10 @@ class User extends Model {
 	}
 
 	static get relationMappings() {
-		const Attendance = require("./attendance");
 		const Group = require("./group");
+		const Role = require("./role");
+		const Attendance = require("./attendance");
+		const Timesheet = require("./timesheet");
 
 		return {
 			group: {
@@ -19,10 +21,22 @@ class User extends Model {
 				join: {
 					from: "user.id",
 					through: {
-						from: "group_has_user.user_id",
-						to: "group_has_user.group_id",
+						from: "role_has_user.user_id",
+						to: "role_has_user.group_id",
 					},
 					to: "group.id",
+				},
+			},
+			role: {
+				relation: Model.ManyToManyRelation,
+				modelClass: Role,
+				join: {
+					from: "user.id",
+					through: {
+						from: "role_has_user.user_id",
+						to: "role_has_user.role_id",
+					},
+					to: "role.id",
 				},
 			},
 			attendance: {
@@ -31,6 +45,14 @@ class User extends Model {
 				join: {
 					from: "user.id",
 					to: "attendance.user_id",
+				},
+			},
+			timesheet: {
+				relation: Model.HasManyRelation,
+				modelClass: Timesheet,
+				join: {
+					from: "user.id",
+					to: "timesheet.user_id",
 				},
 			},
 		};

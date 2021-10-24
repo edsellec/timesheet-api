@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("./../models/user");
 
 async function index(req, res, next) {
-	const data = await User.query();
+	const data = await User.query().withGraphFetched("[attendance, group]");
 
 	res.status(200).json(data);
 }
@@ -17,7 +17,7 @@ async function create(req, res, next) {
 		password: request.password,
 	});
 
-	res.status(200).json(data);
+	res.status(201).json(data);
 }
 
 async function read(req, res, next) {

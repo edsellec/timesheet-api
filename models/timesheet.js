@@ -3,25 +3,34 @@ const knex = require("./../database.js");
 
 Model.knex(knex);
 
-class Attendance extends Model {
+class Timesheet extends Model {
 	static get tableName() {
-		return "attendance";
+		return "timesheet";
 	}
 
 	static get relationMappings() {
 		const User = require("./user");
+		const Activity = require("./activity");
 
 		return {
 			user: {
 				relation: Model.BelongsToOneRelation,
 				modelClass: User,
 				join: {
-					from: "attendance.user_id",
+					from: "timesheet.user_id",
 					to: "user.id",
+				},
+			},
+			activity: {
+				relation: Model.BelongsToOneRelation,
+				modelClass: Activity,
+				join: {
+					from: "timesheet.activity_id",
+					to: "activity.id",
 				},
 			},
 		};
 	}
 }
 
-module.exports = Attendance;
+module.exports = Timesheet;

@@ -1,10 +1,7 @@
-const db = require("../database.js");
-const bcrypt = require("bcrypt");
-
-const GroupHasUser = require("../models/group-has-user");
+const Role = require("./../models/role");
 
 async function index(req, res, next) {
-	const data = await GroupHasUser.query().withGraphFetched("[user, group]");
+	const data = await Role.query().orderBy("id", "asc");
 
 	res.status(200).json(data);
 }
