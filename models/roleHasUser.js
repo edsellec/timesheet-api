@@ -1,5 +1,5 @@
 const { Model } = require("objection");
-const knex = require("./../database.js");
+const knex = require("../config/database.js");
 
 Model.knex(knex);
 
@@ -26,7 +26,6 @@ class RoleHasUser extends Model {
 					to: "user.id",
 				},
 			},
-
 			group: {
 				relation: Model.BelongsToOneRelation,
 				modelClass: Group,
@@ -35,7 +34,6 @@ class RoleHasUser extends Model {
 					to: "group.id",
 				},
 			},
-
 			role: {
 				relation: Model.BelongsToOneRelation,
 				modelClass: Role,

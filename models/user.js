@@ -1,5 +1,5 @@
 const { Model } = require("objection");
-const knex = require("./../database.js");
+const knex = require("../config/database.js");
 
 Model.knex(knex);
 
@@ -28,7 +28,7 @@ class User extends Model {
 				},
 			},
 			role: {
-				relation: Model.ManyToManyRelation,
+				relation: Model.HasOneThroughRelation,
 				modelClass: Role,
 				join: {
 					from: "user.id",
