@@ -1,4 +1,5 @@
 const admin = require("../config/firebase.js");
+const User = require("./../models/user");
 
 function getAuthToken(req, res, next) {
 	if (
@@ -15,11 +16,22 @@ function getAuthToken(req, res, next) {
 function checkIfAuthenticated(req, res, next) {
 	getAuthToken(req, res, async () => {
 		try {
-			const { authToken } = req;
-			const userInfo = await admin.auth().verifyIdToken(authToken);
+			const userInfo = await admin.auth().verifyIdToken(req.authToken);
+			const data = await User.query().withGraphFetched("[role]").findOne({
+				email: userInfo.email,
+			});
+
 			req.authId = userInfo.uid;
+			req.authUser = data;
+			if (data) {
+				req.authRole = data.role;
+			} else {
+				req.authRole = null;
+			}
+
 			return next();
 		} catch (e) {
+			console.log("You are not authorized to make this request");
 			return res
 				.status(200)
 				.send({ error: "You are not authorized to make this request" });

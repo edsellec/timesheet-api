@@ -5,7 +5,6 @@ exports.up = function (knex) {
 		table.string("last_name").notNullable();
 		table.string("email").unique().notNullable();
 		table.date("email_verified_at");
-		table.string("password").notNullable();
 		table.timestamps(false, true);
 	});
 };

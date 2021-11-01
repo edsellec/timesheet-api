@@ -12,7 +12,15 @@ async function index(req, res, next) {
 
 async function create(req, res, next) {}
 
-async function read(req, res, next) {}
+async function read(req, res, next) {
+	const id = req.params.id;
+	const data = await Timesheet.query()
+		.withGraphFetched("[activity]")
+		.where("user_id", id)
+		.orderBy("id", "asc");
+
+	res.status(200).json(data);
+}
 
 async function update(req, res, next) {}
 

@@ -1,5 +1,5 @@
 const { Model } = require("objection");
-const knex = require("../config/database.js");
+const knex = require("./../database.js");
 
 Model.knex(knex);
 

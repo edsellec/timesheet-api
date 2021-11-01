@@ -7,15 +7,13 @@ exports.seed = function (knex) {
 					user_id: 1,
 					activity_id: 2,
 					description: "Meet with students",
-					started_at: knex.fn.now(),
-					ended_at: knex.fn.now(),
+					hours_worked: 8,
 				},
 				{
 					user_id: 2,
 					activity_id: 2,
 					description: "Meet with students",
-					started_at: knex.fn.now(),
-					ended_at: knex.fn.now(),
+					hours_worked: 8,
 				},
 			]);
 		});

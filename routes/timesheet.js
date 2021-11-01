@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const TimesheetController = require("../controllers/timesheet");
+const { checkIfPermitted } = require("./../middleware/role.js");
 
-router.get("/", TimesheetController.index);
+router.get("/", checkIfPermitted("Admin"), TimesheetController.index);
 router.post("/", TimesheetController.create);
 router.get("/:id", TimesheetController.read);
 router.put("/:id", TimesheetController.update);
