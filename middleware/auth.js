@@ -1,5 +1,6 @@
 const admin = require("../config/firebase.js");
 const User = require("./../models/user");
+const moment = require("moment");
 
 function getAuthToken(req, res, next) {
 	if (
@@ -31,10 +32,19 @@ function checkIfAuthenticated(req, res, next) {
 
 			return next();
 		} catch (e) {
-			console.log("You are not authorized to make this request");
+			console.log(
+				"You are not authorized to make this request (Time: " +
+					moment(new Date()).format("MMM D YYYY, h:mm:ss a") +
+					")"
+			);
 			return res
 				.status(200)
-				.send({ error: "You are not authorized to make this request" });
+				.send({
+					error:
+						"You are not authorized to make this request (Time: " +
+						moment(new Date()).format("MMM D YYYY, h:mm:ss a") +
+						")",
+				});
 		}
 	});
 }

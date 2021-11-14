@@ -1,5 +1,4 @@
 const Timesheet = require("./../models/timesheet");
-const RoleHasUser = require("./../models/roleHasUser");
 const User = require("./../models/user");
 
 async function index(req, res, next) {
@@ -10,10 +9,29 @@ async function index(req, res, next) {
 	res.status(200).json(data);
 }
 
-async function create(req, res, next) {}
+async function create(req, res, next) {
+	const request = req.body;
+	const data = await Timesheet.query().insert({
+		user_id: req.authUser.id,
+		activity_id: parseInt(request.activity_id),
+		description: request.description,
+		hours_worked:
+			("00" + request.hours.toString()).substring(
+				request.hours.toString().length
+			) +
+			":" +
+			("00" + request.minutes.toString()).substring(
+				request.minutes.toString().length
+			),
+	});
+
+	res.status(201).json(data);
+}
 
 async function read(req, res, next) {
 	const id = req.params.id;
+	const { before, after } = req.query;
+
 	const data = await Timesheet.query()
 		.withGraphFetched("[activity]")
 		.where("user_id", id)

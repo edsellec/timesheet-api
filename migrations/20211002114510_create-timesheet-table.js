@@ -14,7 +14,7 @@ exports.up = function (knex) {
 			.inTable("activity")
 			.onDelete("CASCADE");
 		table.string("description").notNullable();
-		table.integer("hours_worked").unsigned().notNullable();
+		table.string("hours_worked").notNullable();
 		table.timestamps(false, true);
 	});
 };
