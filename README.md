@@ -1,4 +1,4 @@
-# Timesheet (Frontend)
+# Timesheet (Backend)
 
 A web-based application for filing employee timesheets. Targeted for educators', it's User-friendly, and fast web application for weekly / monthly reporting.
 
