@@ -1,5 +1,5 @@
-const moment = require("moment");
 const Attendance = require("./../models/attendance");
+const moment = require("moment");
 
 async function index(req, res, next) {
 	const data = await Attendance.query().orderBy("id", "desc");

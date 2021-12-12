@@ -1,5 +1,6 @@
 const Timesheet = require("./../models/timesheet");
 const User = require("./../models/user");
+const moment = require("moment");
 
 async function index(req, res, next) {
 	const data = await User.query()
@@ -35,6 +36,28 @@ async function read(req, res, next) {
 	const data = await Timesheet.query()
 		.withGraphFetched("[activity]")
 		.where("user_id", id)
+		.where(
+			"created_at",
+			">=",
+			moment(before)
+				.set({
+					hour: 0,
+					minute: 0,
+					second: 0,
+				})
+				.format("YYYY-MM-DD HH:mm:ss")
+		)
+		.where(
+			"created_at",
+			"<",
+			moment(after)
+				.set({
+					hour: 23,
+					minute: 59,
+					second: 59,
+				})
+				.format("YYYY-MM-DD HH:mm:ss")
+		)
 		.orderBy("id", "asc");
 
 	res.status(200).json(data);
